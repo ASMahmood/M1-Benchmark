@@ -46,6 +46,10 @@
       .hidden {
         display: none;
       }
+
+      .test {
+        color: seagreen;
+      }
     </style>
   </head>
   <body>
@@ -122,7 +126,7 @@
       </tbody>
     </table>
     <hr />
-    <div>
+    <div id="container">
       <img class="hidden" src="img/you cant see me.gif" alt="you cant see me" />
       <p>
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio delectus
@@ -142,11 +146,105 @@
         <li>Dolor</li>
       </ul>
     </div>
+    <div id="DOM" class="hidden">
+      <input type="text" placeholder="Change Title" id="changeHeadingButton" />
+      <input type="button" value="Click here" onclick="changeHeading()" />
+      <br />
+      <input type="button" value="Add row to table" onclick="addRow()" />
+      <br />
+      <input type="button" value="Add class to row" onclick="addTestClass()" />
+      <br />
+      <input type="button" value="Highlight links" onclick="redLinks()" />
+      <br />
+      <input type="number" placeholder="Add items to ul" id="AddLiButton" />
+      <input type="button" value="Click here" onclick="addUlItems()" />
+    </div>
     <footer>
       <p>My name is Abdul Samad Mahmood</p>
       <a target="_blank" href="https://github.com/ASMahmood"
         ><input type="button" value="Click here for my GitHub"
       /></a>
+      <input
+        type="button"
+        value="Click here for DOM functions"
+        onclick="toggleDom()"
+      />
     </footer>
+
+    <script>
+      let container = document.querySelector("#container");
+
+      let tdAll = document.querySelectorAll("td");
+
+      const printTdText = function () {
+        for (let i = 0; i < tdAll.length; i++) {
+          let tdText = tdAll[i].innerText;
+          console.log(tdText);
+        }
+      };
+
+      const changeHeading = function () {
+        let h1 = document.querySelector("h1");
+        let changeHeadingButton = document.querySelector(
+          "#changeHeadingButton"
+        );
+        h1.innerText = changeHeadingButton.value;
+      };
+
+      const addRow = function () {
+        let tableBody = document.querySelector("tbody");
+        let tRow = document.createElement("tr");
+        tRow.style.outline = "2px dotted red";
+        for (let i = 1; i <= 5; i++) {
+          let tCell = document.createElement("td");
+          tCell.innerText = "COLUMN " + i + "- ROW 5";
+          tRow.appendChild(tCell);
+        }
+        tableBody.appendChild(tRow);
+      };
+
+      const addTestClass = function () {
+        let tableRow = document.querySelectorAll("tr");
+        for (let i = 0; i < tableRow.length; i++) {
+          tableRow[i].className = "test";
+        }
+      };
+
+      const redLinks = function () {
+        let links = document.querySelectorAll("a");
+        for (let i = 0; i < links.length; i++) {
+          links[i].style.backgroundColor = "red";
+        }
+      };
+
+      window.onload = function () {
+        alert("Page Loaded");
+      };
+
+      const addUlItems = function () {
+        let n = document.querySelector("#AddLiButton").value;
+        let ul = document.querySelector("ul");
+        for (let i = 0; i < n; i++) {
+          let li = document.createElement("li");
+          li.innerText = "This is a test element";
+          ul.appendChild(li);
+        }
+      };
+
+      const emptyList = function (n) {
+        let list = document.querySelector("ul");
+        list.innerHTML = "";
+      };
+
+      const toggleDom = function () {
+        let DOM = document.querySelector("#DOM");
+        let hidden = document.querySelector(".hidden");
+        if (DOM.classList.contains("hidden")) {
+          return DOM.classList.remove("hidden");
+        } else {
+          return DOM.classList.add("hidden");
+        }
+      };
+    </script>
   </body>
 </html>
