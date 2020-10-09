@@ -50,6 +50,10 @@
       .test {
         color: seagreen;
       }
+
+      .pink {
+        border-color: palevioletred;
+      }
     </style>
   </head>
   <body>
@@ -64,7 +68,7 @@
         I'll probably attempt the quiz other the weekend. No promises though
       </li>
     </ol>
-    <table>
+    <table id="sufferEmotes">
       <thead>
         <tr style="outline: 2px dotted red">
           <td>COLUMN 1-ROW 1</td>
@@ -158,6 +162,34 @@
       <br />
       <input type="number" placeholder="Add items to ul" id="AddLiButton" />
       <input type="button" value="Click here" onclick="addUlItems()" />
+      <br />
+      <input
+        type="button"
+        value="Delete Random Cell"
+        onclick="deleteRandomCell()"
+      />
+      <br />
+      <input
+        type="button"
+        value="Hide Images"
+        id="hideImagesButton"
+        onclick="hideImages()"
+      />
+      <br />
+      <input
+        type="button"
+        value="Toggle Table"
+        id="toggleTableButton"
+        onclick="toggleTable()"
+      />
+      <br />
+      <input type="button" value="Generate table" onclick="generateTable()" />
+      <br />
+      <input
+        type="button"
+        value="Delete excess tables"
+        onclick="deleteExcessTables()"
+      />
     </div>
     <footer>
       <p>My name is Abdul Samad Mahmood</p>
@@ -219,6 +251,34 @@
 
       window.onload = function () {
         alert("Page Loaded");
+
+        let links = document.querySelectorAll("a");
+        for (let i = 0; i < links.length; i++) {
+          let link = links[i];
+          link.addEventListener("mouseover", function () {
+            alert(link.href);
+          });
+        }
+
+        let tdAll = document.querySelectorAll("td");
+        for (let i = 0; i < tdAll.length; i++) {
+          let td = tdAll[i];
+          td.addEventListener("click", function () {
+            event.target.style.backgroundColor = "red";
+          });
+          td.addEventListener("mouseover", function () {
+            event.target.classList.add("pink");
+          });
+          td.addEventListener("mouseleave", function () {
+            event.target.classList.remove("pink");
+          });
+        }
+
+        let h1 = document.querySelector("h1");
+        h1.addEventListener("click", function () {
+          let newH1 = h1.innerText.substring(0, h1.innerText.length - 1);
+          event.target.innerText = newH1;
+        });
       };
 
       const addUlItems = function () {
@@ -243,6 +303,59 @@
           return DOM.classList.remove("hidden");
         } else {
           return DOM.classList.add("hidden");
+        }
+      };
+
+      const hideImages = function () {
+        let images = document.querySelectorAll("img");
+        let hidden = document.querySelector(".hidden");
+        for (let i = 0; i < images.length; i++) {
+          images[i].className = "hidden";
+        }
+      };
+
+      const toggleTable = function () {
+        let table = document.querySelector("#sufferEmotes");
+        let hidden = document.querySelector(".hidden");
+        if (table.classList.contains("hidden")) {
+          return table.classList.remove("hidden");
+        } else {
+          return table.classList.add("hidden");
+        }
+      };
+
+      const deleteRandomCell = function () {
+        let tdAll = document.querySelectorAll("td");
+        const randomTD = function () {
+          return Math.floor(Math.random() * tdAll.length) + 1;
+        };
+        let deleteThisCell = tdAll[randomTD()];
+        deleteThisCell.remove();
+      };
+
+      const generateTable = function () {
+        let body = document.querySelector("body");
+        let newTable = document.createElement("table");
+        let newTableBody = document.createElement("tbody");
+
+        for (let i = 0; i < 3; i++) {
+          let newRow = document.createElement("tr");
+          for (let s = 0; s < 4; s++) {
+            let newCell = document.createElement("td");
+            newCell.innerText = i + " test cell";
+            newRow.appendChild(newCell);
+          }
+          newTableBody.appendChild(newRow);
+        }
+        newTable.appendChild(newTableBody);
+        newTable.className = "newTable";
+        body.appendChild(newTable);
+      };
+
+      const deleteExcessTables = function () {
+        let excessTables = document.querySelectorAll(".newTable");
+        for (let i = 0; i < excessTables.length; i++) {
+          excessTables[i].remove();
         }
       };
     </script>
